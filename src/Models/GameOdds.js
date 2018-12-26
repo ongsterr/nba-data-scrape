@@ -8,18 +8,9 @@ const GameOddsSchema = new Schema({
   isFavorite: Boolean,
   spread: Number,
   total: Number,
-})
-
-GameOddsSchema.pre('save', function(next) {
-  if (this.team.substring(0, 2) == 'at') {
-    this.isHome = true
-  }
-
-  if (this.isFavorite) {
-    this.spread = -this.spread
-  }
-
-  next()
+  concat: String,
 })
 
 const GameOddsModel = mongoose.model('GameOdds', GameOddsSchema)
+
+module.exports = GameOddsModel

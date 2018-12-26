@@ -20,6 +20,9 @@ const playerProjLink = (season, date) =>
 const dfsProjLink = (date, operator = 2) =>
   `https://fantasydata.com/nba-stats/dfs-projections?date=${date}&dfsoperator=${operator}`
 
+const oddsLink = date =>
+  `https://fantasydata.com/nba-stats/point-spreads-and-odds?date=${date}`
+
 const playerStatsSelectors = {
   playerId: N =>
     `#stats_grid > div.k-grid-content-locked > table > tbody > tr:nth-child(${N}) > td.player-id`,
@@ -135,6 +138,17 @@ const dfsProjSelectors = {
     `#stats_grid > div.k-grid-content.k-auto-scrollable > table > tbody > tr:nth-child(${N}) > td.k-sorted`,
 }
 
+const oddsSelectors = {
+  favorite: N =>
+    `#stats_grid > div.k-grid-content.k-auto-scrollable > table > tbody > tr:nth-child(${N}) > td:nth-child(2) > span`,
+  spread: N =>
+    `#stats_grid > div.k-grid-content.k-auto-scrollable > table > tbody > tr:nth-child(${N}) > td:nth-child(3) > span`,
+  underdog: N =>
+    `#stats_grid > div.k-grid-content.k-auto-scrollable > table > tbody > tr:nth-child(${N}) > td:nth-child(4) > span`,
+  total: N =>
+    `#stats_grid > div.k-grid-content.k-auto-scrollable > table > tbody > tr:nth-child(${N}) > td:nth-child(5) > span`,
+}
+
 module.exports = Object.assign(
   {},
   {
@@ -145,8 +159,10 @@ module.exports = Object.assign(
     playerStatsLink,
     playerProjLink,
     dfsProjLink,
+    oddsLink,
     playerStatsSelectors,
     playerProjSelectors,
     dfsProjSelectors,
+    oddsSelectors,
   }
 )
