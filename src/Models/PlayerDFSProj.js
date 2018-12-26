@@ -2,6 +2,7 @@ const mongoose = require('mongoose')
 const { Schema } = mongoose
 
 const PlayerDFSProjSchema = new Schema({
+  date: Date,
   playerId: String,
   team: String,
   pos: String,
@@ -12,6 +13,7 @@ const PlayerDFSProjSchema = new Schema({
   projPerDollar: Number,
   salary: Number,
   platform: String,
+  concat: String,
 })
 
 PlayerDFSProjSchema.pre('save', function(next) {

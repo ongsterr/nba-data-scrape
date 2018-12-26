@@ -17,6 +17,9 @@ const playerStatsLink = (season, date) =>
 const playerProjLink = (season, date) =>
   `https://fantasydata.com/nba-stats/fantasy-basketball-projections?scope=2&season=${season}&seasontype=1&conference=1&date=${date}`
 
+const dfsProjLink = (date, operator = 2) =>
+  `https://fantasydata.com/nba-stats/dfs-projections?date=${date}&dfsoperator=${operator}`
+
 const playerStatsSelectors = {
   playerId: N =>
     `#stats_grid > div.k-grid-content-locked > table > tbody > tr:nth-child(${N}) > td.player-id`,
@@ -103,6 +106,35 @@ const playerProjSelectors = {
     `#stats_grid > div.k-grid-content.k-auto-scrollable > table > tbody > tr:nth-child(${N}) > td.k-sorted > span`,
 }
 
+const dfsProjSelectors = {
+  eventDropdown:
+    '#home > div > div:nth-child(1) > div:nth-child(2) > div.col-lg-9.col-s-12.col-xxs-12 > div.ddl-wrap.ddl-slate > span',
+  eventName: N =>
+    `body > div.k-animation-container > div > div.k-list-scroller > ul > li:nth-child(${N}) > div > div.player-info > b`,
+  eventSelection: N =>
+    `body > div.k-animation-container > div > div.k-list-scroller > ul > li:nth-child(${N})`,
+  playerId: N =>
+    `#stats_grid > div.k-grid-content-locked > table > tbody > tr:nth-child(${N}) > td.player-id`,
+  playerName: N =>
+    `#stats_grid > div.k-grid-content-locked > table > tbody > tr:nth-child(${N}) > td.align-left > a`,
+  team: N =>
+    `#stats_grid > div.k-grid-content.k-auto-scrollable > table > tbody > tr:nth-child(${N}) > td:nth-child(1) > span`,
+  pos: N =>
+    `#stats_grid > div.k-grid-content.k-auto-scrollable > table > tbody > tr:nth-child(${N}) > td:nth-child(2) > span`,
+  opp: N =>
+    `#stats_grid > div.k-grid-content.k-auto-scrollable > table > tbody > tr:nth-child(${N}) > td:nth-child(3)`,
+  oppRank: N =>
+    `#stats_grid > div.k-grid-content.k-auto-scrollable > table > tbody > tr:nth-child(${N}) > td:nth-child(4)`,
+  oppPosRank: N =>
+    `#stats_grid > div.k-grid-content.k-auto-scrollable > table > tbody > tr:nth-child(${N}) > td:nth-child(5)`,
+  proj: N =>
+    `#stats_grid > div.k-grid-content.k-auto-scrollable > table > tbody > tr:nth-child(${N}) > td:nth-child(6)`,
+  projPerDollar: N =>
+    `#stats_grid > div.k-grid-content.k-auto-scrollable > table > tbody > tr:nth-child(${N}) > td:nth-child(7)`,
+  salary: N =>
+    `#stats_grid > div.k-grid-content.k-auto-scrollable > table > tbody > tr:nth-child(${N}) > td.k-sorted`,
+}
+
 module.exports = Object.assign(
   {},
   {
@@ -112,7 +144,9 @@ module.exports = Object.assign(
     playerIdToggle,
     playerStatsLink,
     playerProjLink,
+    dfsProjLink,
     playerStatsSelectors,
     playerProjSelectors,
+    dfsProjSelectors,
   }
 )
