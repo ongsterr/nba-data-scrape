@@ -30,6 +30,12 @@ const scrapePlayerStats = async ({ season, date, numOfRecords, email, pw }) => {
   await page.waitFor(2000)
 
   for (let i = 1; i <= numOfRecords; i++) {
+    const dataCheck = await page.evaluate(
+      sel => document.querySelector(sel),
+      playerStatsSelectors.playerId(i)
+    )
+    if (!dataCheck) break
+
     const playerId = await page.evaluate(
       sel => document.querySelector(sel).innerText,
       playerStatsSelectors.playerId(i)
@@ -144,6 +150,8 @@ const scrapePlayerStats = async ({ season, date, numOfRecords, email, pw }) => {
     await playerStatsRepo().saveData(dataToSave)
     console.count('Data saved')
   }
+
+  console.log(`Player stats data download completed for ${date}`)
 }
 
 module.exports = scrapePlayerStats

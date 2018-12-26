@@ -30,6 +30,12 @@ const scrapePlayerProj = async ({ season, date, numOfRecords, email, pw }) => {
   await page.waitFor(2000)
 
   for (let i = 1; i <= numOfRecords; i++) {
+    const dataCheck = await page.evaluate(
+      sel => document.querySelector(sel),
+      playerProjSelectors.playerId(i)
+    )
+    if (!dataCheck) break
+
     const playerId = await page.evaluate(
       sel => document.querySelector(sel).innerText,
       playerProjSelectors.playerId(i)
@@ -134,6 +140,8 @@ const scrapePlayerProj = async ({ season, date, numOfRecords, email, pw }) => {
     await playerProjRepo().saveData(dataToSave)
     console.count('Data saved')
   }
+
+  console.log(`Player projection data download completed for ${date}`)
 }
 
 module.exports = scrapePlayerProj
