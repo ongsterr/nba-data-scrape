@@ -22,6 +22,7 @@ const PlayerStatProjSchema = new Schema({
   to: Number,
   min: Number,
   fpts: Number,
+  concat: String,
 })
 
 const PlayerStatProjModel = mongoose.model(
