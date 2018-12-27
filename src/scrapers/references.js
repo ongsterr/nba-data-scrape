@@ -1,3 +1,5 @@
+const ProgressBar = require('progress')
+
 const userLoginLink = `https://fantasydata.com/user/login`
 const userLoginSelectors = {
   email: `#Email`,
@@ -149,6 +151,19 @@ const oddsSelectors = {
     `#stats_grid > div.k-grid-content.k-auto-scrollable > table > tbody > tr:nth-child(${N}) > td:nth-child(5) > span`,
 }
 
+const progressBar = (event, total) => {
+  const bar = new ProgressBar(
+    `Inserting data for ${event}: [:bar] :current :percent :eta      `,
+    {
+      total,
+      callback: () => {
+        console.log('Database insert completed :)')
+      },
+    }
+  )
+  return bar
+}
+
 module.exports = Object.assign(
   {},
   {
@@ -164,5 +179,6 @@ module.exports = Object.assign(
     playerProjSelectors,
     dfsProjSelectors,
     oddsSelectors,
+    progressBar,
   }
 )

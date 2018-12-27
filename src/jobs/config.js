@@ -5,7 +5,7 @@ const downloadOptions = {
   email: process.env.EMAIL,
   pw: process.env.PW,
   season: 2019,
-  numberOfRecords: 300,
+  numOfRecords: 300,
 }
 
 module.exports = Object.assign({}, { downloadOptions })

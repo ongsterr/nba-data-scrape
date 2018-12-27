@@ -4,17 +4,17 @@ const PlayerProj = require('../models/PlayerStatsProj')
 const { databaseConfig } = require('../config')
 
 const playerProjRepo = () => {
-  if (mongoose.connection.readyState === 0) {
-    mongoose.connect(
-      databaseConfig.dbUrl(),
-      databaseConfig.mongoOptions,
-      () => {
-        console.log('Established connection to MongoDB')
-      }
-    )
-  }
-
   const saveData = async playerData => {
+    if (mongoose.connection.readyState === 0) {
+      mongoose.connect(
+        databaseConfig.dbUrl(),
+        databaseConfig.mongoOptions,
+        () => {
+          console.log('Established connection to MongoDB')
+        }
+      )
+    }
+
     const condition = {
       concat: playerData.concat,
     }

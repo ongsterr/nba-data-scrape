@@ -7,16 +7,18 @@ const {
   playerIdToggle,
   dfsProjLink,
   dfsProjSelectors,
+  progressBar,
 } = require('./references')
 const { dfsProjRepo } = require('../repo')
+const { puppeteerConfig } = require('../config')
 
 const scrapeDfsProj = async ({ date, platform, numOfRecords, email, pw }) => {
   const browser = await puppeteer.launch({
-    headless: false,
+    headless: true,
   })
 
   const page = await browser.newPage()
-  await page.goto(userLoginLink)
+  await page.goto(userLoginLink, puppeteerConfig.goToPageOptions)
   await page.click(userLoginSelectors.email)
   await page.keyboard.type(email)
   await page.click(userLoginSelectors.password)
@@ -24,7 +26,7 @@ const scrapeDfsProj = async ({ date, platform, numOfRecords, email, pw }) => {
   await page.click(userLoginSelectors.loginButton)
   await page.waitFor(2000)
 
-  await page.goto(dfsProjLink(date, platform))
+  await page.goto(dfsProjLink(date, platform), puppeteerConfig.goToPageOptions)
   await page.click(pageSize300)
   await page.click(playerIdToggle)
   await page.click(dfsProjSelectors.eventDropdown)
@@ -45,6 +47,9 @@ const scrapeDfsProj = async ({ date, platform, numOfRecords, email, pw }) => {
     }
   }
   await page.waitFor(2000)
+
+  const bar = progressBar('DFS Projection Download', numOfRecords)
+  const platformName = platform == 2 ? 'FanDuel' : 'DraftKings'
 
   for (let i = 1; i <= numOfRecords; i++) {
     const dataCheck = await page.evaluate(
@@ -94,8 +99,6 @@ const scrapeDfsProj = async ({ date, platform, numOfRecords, email, pw }) => {
       dfsProjSelectors.salary(i)
     )
 
-    const platformName = platform == 2 ? 'FanDuel' : 'DraftKings'
-
     const dataToSave = {
       date,
       playerId,
@@ -113,10 +116,12 @@ const scrapeDfsProj = async ({ date, platform, numOfRecords, email, pw }) => {
     }
 
     await dfsProjRepo().saveData(dataToSave)
-    console.count('Data saved')
+    bar.tick()
   }
 
-  console.log(`DFS Projection Data download completed for ${date}`)
+  console.log(
+    `DFS Projection Data download completed for ${platformName} on ${date}\n`
+  )
 }
 
 module.exports = scrapeDfsProj

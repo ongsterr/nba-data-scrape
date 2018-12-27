@@ -7,16 +7,18 @@ const {
   playerIdToggle,
   playerStatsLink,
   playerStatsSelectors,
+  progressBar,
 } = require('./references')
 const { playerStatsRepo } = require('../repo')
+const { puppeteerConfig } = require('../config')
 
 const scrapePlayerStats = async ({ season, date, numOfRecords, email, pw }) => {
   const browser = await puppeteer.launch({
-    headless: false,
+    headless: true,
   })
 
   const page = await browser.newPage()
-  await page.goto(userLoginLink)
+  await page.goto(userLoginLink, puppeteerConfig.goToPageOptions)
   await page.click(userLoginSelectors.email)
   await page.keyboard.type(email)
   await page.click(userLoginSelectors.password)
@@ -24,16 +26,22 @@ const scrapePlayerStats = async ({ season, date, numOfRecords, email, pw }) => {
   await page.click(userLoginSelectors.loginButton)
   await page.waitFor(2000)
 
-  await page.goto(playerStatsLink(season, date))
+  await page.goto(
+    playerStatsLink(season, date),
+    puppeteerConfig.goToPageOptions
+  )
   await page.click(pageSize300)
   await page.click(playerIdToggle)
   await page.waitFor(2000)
+
+  const bar = progressBar('Player Stats Download', numOfRecords)
 
   for (let i = 1; i <= numOfRecords; i++) {
     const dataCheck = await page.evaluate(
       sel => document.querySelector(sel),
       playerStatsSelectors.playerId(i)
     )
+
     if (!dataCheck) break
 
     const playerId = await page.evaluate(
@@ -148,10 +156,10 @@ const scrapePlayerStats = async ({ season, date, numOfRecords, email, pw }) => {
     }
 
     await playerStatsRepo().saveData(dataToSave)
-    console.count('Data saved')
+    bar.tick()
   }
 
-  console.log(`Player stats data download completed for ${date}`)
+  console.log(`Player stats data download completed for ${date}\n`)
 }
 
 module.exports = scrapePlayerStats

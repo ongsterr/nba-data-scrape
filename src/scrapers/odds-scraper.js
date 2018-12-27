@@ -5,16 +5,18 @@ const {
   userLoginSelectors,
   oddsLink,
   oddsSelectors,
+  progressBar,
 } = require('./references')
 const { gameOddsRepo } = require('../repo')
+const { puppeteerConfig } = require('../config')
 
 const scrapeGameOdds = async ({ date, numOfRecords, email, pw }) => {
   const browser = await puppeteer.launch({
-    headless: false,
+    headless: true,
   })
 
   const page = await browser.newPage()
-  await page.goto(userLoginLink)
+  await page.goto(userLoginLink, puppeteerConfig.goToPageOptions)
   await page.click(userLoginSelectors.email)
   await page.keyboard.type(email)
   await page.click(userLoginSelectors.password)
@@ -22,8 +24,10 @@ const scrapeGameOdds = async ({ date, numOfRecords, email, pw }) => {
   await page.click(userLoginSelectors.loginButton)
   await page.waitFor(2000)
 
-  await page.goto(oddsLink(date))
+  await page.goto(oddsLink(date), puppeteerConfig.goToPageOptions)
   await page.waitFor(2000)
+
+  const bar = progressBar('Game Odds Download', numOfRecords / 15)
 
   for (let i = 1; i <= numOfRecords; i++) {
     const dataCheck = await page.evaluate(
@@ -71,10 +75,10 @@ const scrapeGameOdds = async ({ date, numOfRecords, email, pw }) => {
 
     await gameOddsRepo().saveData(favoriteTeam)
     await gameOddsRepo().saveData(underdogTeam)
-    console.count('Data saved')
+    bar.tick()
   }
 
-  console.log(`Game Odds Data download completed for ${date}`)
+  console.log(`Game Odds Data download completed for ${date}\n`)
 }
 
 module.exports = scrapeGameOdds

@@ -19,4 +19,10 @@ const databaseConfig = {
   },
 }
 
-module.exports = Object.assign({}, { databaseConfig })
+const puppeteerConfig = {
+  goToPageOptions: {
+    timeout: 0,
+  },
+}
+
+module.exports = Object.assign({}, { databaseConfig, puppeteerConfig })
