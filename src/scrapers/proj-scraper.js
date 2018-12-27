@@ -146,6 +146,7 @@ const scrapePlayerProj = async ({ season, date, numOfRecords, email, pw }) => {
   }
 
   console.log(`Player projection data download completed for ${date}\n`)
+  await browser.close()
 }
 
 module.exports = scrapePlayerProj

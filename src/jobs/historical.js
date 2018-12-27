@@ -56,6 +56,6 @@ const downloadHistoricalData = async (
 }
 
 // Run job here...
-downloadHistoricalData(downloadOptions, '23-10-2018', 100).then(() =>
+downloadHistoricalData(downloadOptions, '16-11-2018', 100).then(() =>
   console.log(`Download job completed for data from 16-10-2018 for 100 days.`)
 )

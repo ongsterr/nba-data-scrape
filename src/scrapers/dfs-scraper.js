@@ -122,6 +122,7 @@ const scrapeDfsProj = async ({ date, platform, numOfRecords, email, pw }) => {
   console.log(
     `DFS Projection Data download completed for ${platformName} on ${date}\n`
   )
+  await browser.close()
 }
 
 module.exports = scrapeDfsProj

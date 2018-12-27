@@ -160,6 +160,7 @@ const scrapePlayerStats = async ({ season, date, numOfRecords, email, pw }) => {
   }
 
   console.log(`Player stats data download completed for ${date}\n`)
+  await browser.close()
 }
 
 module.exports = scrapePlayerStats

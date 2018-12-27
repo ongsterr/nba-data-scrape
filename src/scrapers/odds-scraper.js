@@ -79,6 +79,7 @@ const scrapeGameOdds = async ({ date, numOfRecords, email, pw }) => {
   }
 
   console.log(`Game Odds Data download completed for ${date}\n`)
+  await browser.close()
 }
 
 module.exports = scrapeGameOdds
