@@ -120,12 +120,3 @@ const scrapeDfsProj = async ({ date, platform, numOfRecords, email, pw }) => {
 }
 
 module.exports = scrapeDfsProj
-
-const options = {
-  date: '12-20-2018',
-  platform: 3,
-  numOfRecords: 10,
-  email: 'ong.chris11@gmail.com',
-  pw: 'Coder2018',
-}
-scrapeDfsProj(options)

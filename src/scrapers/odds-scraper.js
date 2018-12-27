@@ -78,11 +78,3 @@ const scrapeGameOdds = async ({ date, numOfRecords, email, pw }) => {
 }
 
 module.exports = scrapeGameOdds
-
-const options = {
-  date: '12-20-2018',
-  numOfRecords: 10,
-  email: 'ong.chris11@gmail.com',
-  pw: 'Coder2018',
-}
-scrapeGameOdds(options)

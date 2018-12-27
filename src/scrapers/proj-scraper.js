@@ -145,12 +145,3 @@ const scrapePlayerProj = async ({ season, date, numOfRecords, email, pw }) => {
 }
 
 module.exports = scrapePlayerProj
-
-const options = {
-  season: 2019,
-  date: '12-20-2018',
-  numOfRecords: 10,
-  email: 'ong.chris11@gmail.com',
-  pw: 'Coder2018',
-}
-scrapePlayerProj(options)
