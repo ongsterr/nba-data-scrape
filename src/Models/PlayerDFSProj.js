@@ -4,6 +4,7 @@ const { Schema } = mongoose
 const PlayerDFSProjSchema = new Schema({
   date: Date,
   playerId: String,
+  playerName: String,
   team: String,
   pos: String,
   opp: String,

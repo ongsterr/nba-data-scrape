@@ -4,7 +4,7 @@ const { Schema } = mongoose
 const PlayerStatProjSchema = new Schema({
   date: Date,
   playerId: String,
-  name: String,
+  playerName: String,
   team: String,
   pos: String,
   opp: String,

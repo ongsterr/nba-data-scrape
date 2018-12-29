@@ -1,4 +1,5 @@
 const puppeteer = require('puppeteer')
+const moment = require('moment')
 
 const {
   userLoginLink,
@@ -130,7 +131,7 @@ const scrapePlayerStats = async ({ season, date, numOfRecords, email, pw }) => {
     )
 
     const dataToSave = {
-      date,
+      date: moment(date, 'MM-DD-YYYY').toDate(),
       playerId,
       playerName,
       team,

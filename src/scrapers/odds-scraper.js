@@ -1,4 +1,5 @@
 const puppeteer = require('puppeteer')
+const moment = require('moment')
 
 const {
   userLoginLink,
@@ -54,22 +55,22 @@ const scrapeGameOdds = async ({ date, numOfRecords, email, pw }) => {
     )
 
     const favoriteTeam = {
-      date,
+      date: moment(date, 'MM-DD-YYYY').toDate(),
       team: favorite.substring(0, 2) == 'at' ? favorite.substring(3) : favorite,
       isHome: favorite.substring(0, 2) == 'at',
-      isfavorite: true,
-      spread: parseFloat(spread),
-      total: parseFloat(total),
+      isFavorite: true,
+      spread: parseFloat(spread) == NaN ? 0 : parseFloat(spread),
+      total: parseFloat(total) == NaN ? 0 : parseFloat(total),
       concat: date.concat(favorite, underdog),
     }
 
     const underdogTeam = {
-      date,
+      date: moment(date, 'MM-DD-YYYY').toDate(),
       team: underdog.substring(0, 2) == 'at' ? underdog.substring(3) : underdog,
       isHome: underdog.substring(0, 2) == 'at',
-      isfavorite: false,
-      spread: parseFloat(spread) * -1,
-      total: parseFloat(total),
+      isFavorite: false,
+      spread: parseFloat(spread) == NaN ? 0 : parseFloat(spread) * -1,
+      total: parseFloat(total) == NaN ? 0 : parseFloat(total),
       concat: date.concat(underdog, favorite),
     }
 
