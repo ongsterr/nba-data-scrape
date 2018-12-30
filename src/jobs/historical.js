@@ -2,7 +2,6 @@
 const moment = require('moment')
 const EventEmitter = require('events')
 
-const { downloadOptions } = require('./config')
 const {
   scrapePlayerStats,
   scrapePlayerProj,
@@ -114,10 +113,4 @@ const getDateArr = (startDate, endDate) => {
   return dateArr
 }
 
-// Run job here...
-// downloadHistoricalData(downloadOptions, '06-11-2018', '06-11-2018').then(() =>
-//   console.log(`Download job completed...`)
-// )
-
-// Run report here...
-runReport('16-10-2018', '27-12-2018')
+module.exports = Object.assign({}, { downloadHistoricalData, runReport })

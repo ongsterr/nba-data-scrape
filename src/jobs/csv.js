@@ -38,5 +38,4 @@ const generateCSV = async (startDate, endDate, config) => {
   }
 }
 
-// Run generate CSV job
-generateAllCSV('29-12-2018', '29-12-2018')
+module.exports = Object.assign({}, { generateAllCSV })
