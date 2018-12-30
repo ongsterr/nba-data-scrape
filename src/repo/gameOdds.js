@@ -25,7 +25,15 @@ const gameOddsRepo = () => {
   }
 
   const checkData = async (startDate, endDate) =>
-    await PlayerStats.distinct('date', {
+    await GameOdds.distinct('date', {
+      date: {
+        $gte: moment(startDate, 'DD-MM-YYYY').toDate(),
+        $lte: moment(endDate, 'DD-MM-YYYY').toDate(),
+      },
+    }).lean()
+
+  const getData = async (startDate, endDate) =>
+    await GameOdds.find({
       date: {
         $gte: moment(startDate, 'DD-MM-YYYY').toDate(),
         $lte: moment(endDate, 'DD-MM-YYYY').toDate(),
@@ -35,6 +43,7 @@ const gameOddsRepo = () => {
   return {
     saveData,
     checkData,
+    getData,
   }
 }
 

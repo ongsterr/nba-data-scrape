@@ -26,7 +26,14 @@ const scrapeGameOdds = async ({ date, numOfRecords, email, pw }) => {
   await page.waitFor(2000)
 
   await page.goto(oddsLink(date), puppeteerConfig.goToPageOptions)
-  await page.waitFor(2000)
+
+  try {
+    await page.waitForSelector(oddsSelectors.favorite(1), {
+      timeout: 20000,
+    })
+  } catch (e) {
+    console.log('No data... Timeout...')
+  }
 
   const bar = progressBar('Game Odds Download', numOfRecords / 15)
 

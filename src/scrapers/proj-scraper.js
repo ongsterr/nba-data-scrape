@@ -30,7 +30,14 @@ const scrapePlayerProj = async ({ season, date, numOfRecords, email, pw }) => {
   await page.goto(playerProjLink(season, date), puppeteerConfig.goToPageOptions)
   await page.click(pageSize300)
   await page.click(playerIdToggle)
-  await page.waitFor(2000)
+
+  try {
+    await page.waitForSelector(playerProjSelectors.playerId(1), {
+      timeout: 20000,
+    })
+  } catch (e) {
+    console.log('No data... Timeout...')
+  }
 
   const bar = progressBar('Player Projections Download', numOfRecords)
 

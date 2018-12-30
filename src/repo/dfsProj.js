@@ -25,7 +25,15 @@ const dfsProjRepo = () => {
   }
 
   const checkData = async (startDate, endDate) =>
-    await PlayerStats.distinct('date', {
+    await DfsProj.distinct('date', {
+      date: {
+        $gte: moment(startDate, 'DD-MM-YYYY').toDate(),
+        $lte: moment(endDate, 'DD-MM-YYYY').toDate(),
+      },
+    }).lean()
+
+  const getData = async (startDate, endDate) =>
+    await DfsProj.find({
       date: {
         $gte: moment(startDate, 'DD-MM-YYYY').toDate(),
         $lte: moment(endDate, 'DD-MM-YYYY').toDate(),
@@ -35,6 +43,7 @@ const dfsProjRepo = () => {
   return {
     saveData,
     checkData,
+    getData,
   }
 }
 

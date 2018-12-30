@@ -32,9 +32,18 @@ const playerStatsRepo = () => {
       },
     }).lean()
 
+  const getData = async (startDate, endDate) =>
+    await PlayerStats.find({
+      date: {
+        $gte: moment(startDate, 'DD-MM-YYYY').toDate(),
+        $lte: moment(endDate, 'DD-MM-YYYY').toDate(),
+      },
+    }).lean()
+
   return {
     saveData,
     checkData,
+    getData,
   }
 }
 

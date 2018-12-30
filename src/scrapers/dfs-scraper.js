@@ -47,7 +47,14 @@ const scrapeDfsProj = async ({ date, platform, numOfRecords, email, pw }) => {
       break
     }
   }
-  await page.waitFor(2000)
+
+  try {
+    await page.waitForSelector(dfsProjSelectors.playerId(1), {
+      timeout: 20000,
+    })
+  } catch (e) {
+    console.log('No data... Timeout...')
+  }
 
   const bar = progressBar('DFS Projection Download', numOfRecords)
   const platformName = platform == 2 ? 'FanDuel' : 'DraftKings'

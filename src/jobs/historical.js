@@ -18,15 +18,14 @@ const {
 
 EventEmitter.defaultMaxListeners = 1000 // depends on number of items scraped
 
-const downloadHistoricalData = async (
-  downloadOptions,
-  startDate,
-  periodInDays
-) => {
+const downloadHistoricalData = async (downloadOptions, startDate, endDate) => {
   const momentStartDate = moment(startDate, 'DD-MM-YYYY')
+  const momentEndDate = moment(endDate, 'DD-MM-YYYY')
+  const periodInDays = momentEndDate.diff(momentStartDate, 'days') + 1
 
   for (let h = 0; h < periodInDays; h++) {
-    const date = momentStartDate.add(1, 'days')
+    const n = h == 0 ? 0 : 1
+    const date = momentStartDate.add(n, 'days')
     const statsDownloadOptions = {
       ...downloadOptions,
       date: date.format('MM-DD-YYYY'),
@@ -60,15 +59,7 @@ const downloadHistoricalData = async (
     await scrapeGameOdds(oddsDownloadOptions)
   }
 
-  downloadReport(startDate, endDate, playerStatsRepo, 'Player Stats Download')
-  downloadReport(
-    startDate,
-    endDate,
-    playerProjRepo,
-    'Player Projections Download'
-  )
-  downloadReport(startDate, endDate, dfsProjRepo, 'DFS Projections Download')
-  downloadReport(startDate, endDate, gameOddsRepo, 'Game Odds Download')
+  runReport(startDate, endDate)
 }
 
 const downloadReport = async (startDate, endDate, repo, repoName) => {
@@ -93,6 +84,18 @@ const downloadReport = async (startDate, endDate, repo, repoName) => {
   )
 }
 
+const runReport = (startDate, endDate) => {
+  downloadReport(startDate, endDate, playerStatsRepo, 'Player Stats Download')
+  downloadReport(
+    startDate,
+    endDate,
+    playerProjRepo,
+    'Player Projections Download'
+  )
+  downloadReport(startDate, endDate, dfsProjRepo, 'DFS Projections Download')
+  downloadReport(startDate, endDate, gameOddsRepo, 'Game Odds Download')
+}
+
 const getDateArr = (startDate, endDate) => {
   const startDateMoment = moment(startDate, 'DD-MM-YYYY')
   const endDateMoment = moment(endDate, 'DD-MM-YYYY')
@@ -112,6 +115,9 @@ const getDateArr = (startDate, endDate) => {
 }
 
 // Run job here...
-downloadHistoricalData(downloadOptions, '27-12-2018', 1).then(() =>
-  console.log(`Download job completed...`)
-)
+// downloadHistoricalData(downloadOptions, '06-11-2018', '06-11-2018').then(() =>
+//   console.log(`Download job completed...`)
+// )
+
+// Run report here...
+runReport('16-10-2018', '27-12-2018')
