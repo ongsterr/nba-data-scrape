@@ -4,11 +4,13 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "download": "node .\\src\\jobs\\historical.js"
+    "download": "node .\\src\\jobs\\historical.js",
+    "csv": "node .\\src\\jobs\\csv.js"
   },
   "author": "chrisongg",
   "license": "ISC",
   "dependencies": {
+    "json2csv": "^4.3.2",
     "moment": "^2.23.0",
     "mongoose": "^5.4.0",
     "progress": "^2.0.3",
