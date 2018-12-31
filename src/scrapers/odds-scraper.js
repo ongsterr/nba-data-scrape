@@ -66,8 +66,8 @@ const scrapeGameOdds = async ({ date, numOfRecords, email, pw }) => {
       team: favorite.substring(0, 2) == 'at' ? favorite.substring(3) : favorite,
       isHome: favorite.substring(0, 2) == 'at',
       isFavorite: true,
-      spread: parseFloat(spread) == NaN ? 0 : parseFloat(spread),
-      total: parseFloat(total) == NaN ? 0 : parseFloat(total),
+      spread: isNaN(parseFloat(spread)) ? 0 : parseFloat(spread),
+      total: isNaN(parseFloat(total)) ? 0 : parseFloat(total),
       concat: date.concat(favorite, underdog),
     }
 
@@ -76,8 +76,8 @@ const scrapeGameOdds = async ({ date, numOfRecords, email, pw }) => {
       team: underdog.substring(0, 2) == 'at' ? underdog.substring(3) : underdog,
       isHome: underdog.substring(0, 2) == 'at',
       isFavorite: false,
-      spread: parseFloat(spread) == NaN ? 0 : parseFloat(spread) * -1,
-      total: parseFloat(total) == NaN ? 0 : parseFloat(total),
+      spread: isNaN(parseFloat(spread)) ? 0 : parseFloat(spread) * -1,
+      total: isNaN(parseFloat(total)) ? 0 : parseFloat(total),
       concat: date.concat(underdog, favorite),
     }
 

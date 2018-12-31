@@ -4,8 +4,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "download": "node .\\src\\jobs\\historical.js",
-    "csv": "node .\\src\\jobs\\csv.js"
+    "job": "node .\\src\\jobs\\index.js"
   },
   "author": "chrisongg",
   "license": "ISC",
